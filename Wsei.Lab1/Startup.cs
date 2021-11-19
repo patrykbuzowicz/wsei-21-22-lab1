@@ -4,11 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Wsei.Lab1.Database;
+using Wsei.Lab1.Hubs;
 
 namespace Wsei.Lab1
 {
@@ -25,6 +22,7 @@ namespace Wsei.Lab1
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddSignalR();
 
             services.AddDbContext<AppDbContext>(config =>
                 config.UseSqlServer(Configuration.GetConnectionString("Application"))
@@ -50,6 +48,8 @@ namespace Wsei.Lab1
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<UpdatesHub>("signalr/updates");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
