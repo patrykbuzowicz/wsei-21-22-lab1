@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wsei.Lab1.Database;
-using Wsei.Lab1.Hubs;
 using Wsei.Lab1.Middleware;
 using Wsei.Lab1.Services;
 
@@ -59,8 +58,6 @@ namespace Wsei.Lab1
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<UpdatesHub>("signalr/updates");
-
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
