@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wsei.Lab1.Database;
+using Wsei.Lab1.Hubs;
 using Wsei.Lab1.Middleware;
 using Wsei.Lab1.Services;
 
@@ -34,6 +35,7 @@ namespace Wsei.Lab1
 
             services.AddTransient<IProductService, ProductService>();
             services.AddSingleton<IMetricsCollector, MetricsService>();
+            services.AddSingleton<IChatMessagesRepository, ChatMessageRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +65,8 @@ namespace Wsei.Lab1
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapRazorPages();
+
+                endpoints.MapHub<ChatHub>("/chat/hub");
             });
         }
     }
